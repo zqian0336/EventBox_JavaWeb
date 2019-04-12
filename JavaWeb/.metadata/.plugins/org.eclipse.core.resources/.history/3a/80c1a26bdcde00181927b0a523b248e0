@@ -1,0 +1,18 @@
+(function (){
+	var user_id = '1111';
+	var user_fullname = 'John Smith';
+	var lon = -122.08;
+	var lat = 37.38;
+	
+	init();
+	
+	function init(){
+		$('nearby-btn').addEventListener('click',loadNearbyItems );
+		
+		var welcomeMsg = $('welcome-msg');
+		welcomeMsg.innerHTML = 'Welcome, ' + user_fullname; 
+	}
+	
+	
+	
+})()

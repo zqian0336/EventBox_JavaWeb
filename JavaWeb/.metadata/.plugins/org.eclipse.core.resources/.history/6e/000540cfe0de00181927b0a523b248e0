@@ -1,0 +1,62 @@
+(function (){
+	var user_id = '1111';
+	var user_fullname = 'John Smith';
+	var lon = -122.08;
+	var lat = 37.38;
+	
+	init();
+	
+	function init(){
+		$('nearby-btn').addEventListener('click',loadNearbyItems);
+		
+		var welcomeMsg = $('welcome-msg');
+		welcomeMsg.innerHTML = 'Welcome, ' + user_fullname; 
+	
+		initGeoLocation();
+	}
+	//Helper Function that creates a DOM element
+	function $(tag, options) {
+		if (!options) {
+			return document.getElementById(tag);
+		}
+		var element = document.createElement(tag);
+
+		for ( var option in options) {
+			if (options.hasOwnProperty(option)) {
+				element[option] = options[option];
+			}
+		}
+		return element;
+	}
+	
+	//AJAX
+	function ajax(method, url, data,callback, errorHandler) {
+		var xhr = new XML_HttpRequest(); //ajax object [xhr负责前后端数据通信]
+		xhr.open(method, url, true); //传递方法,目的地址
+		xhr.onload = function(){  //xhr本身运行正常，判断response
+			if (xhr.status == 200) {
+				callback (xhr.responseText); 
+			} else if (xhr.status === 403) {
+				onSessionInvalid();
+			} else {
+				errorHandler();
+			}
+		};
+		
+		xhr.onerror = function(){ //if error on xhr itself[request]
+			console.error("Cannot complete Request ");
+			errorHandler();
+		};
+		
+		if (data === null) { //没有内容，直接传递 [对收到数据的处理]
+			xhr.send();
+		} else {
+			xhr.setRequestHeader("Content-Type","application/json:charset=utf-8");
+			xhr.send(data);
+		}
+	}
+
+	
+	
+	
+})()
